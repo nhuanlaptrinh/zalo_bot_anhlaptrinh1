@@ -1,0 +1,362 @@
+{
+  "name": "Bot_AnhLapTrinh1",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://bot-api.zaloplatforms.com/bot{{ $json.access_token_zalo.trim() }}/setWebhook ",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.Webhook_URL }}"
+            },
+            {
+              "name": "secret_token",
+              "value": "aa1233456"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        1344
+      ],
+      "id": "320c78fb-19b3-4a69-a135-efa7cacf9614",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        1344
+      ],
+      "id": "4408a749-b517-4d71-ab85-19a491de2279",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "801137d3-13bc-4dae-a74d-bfb1c4454f77",
+              "name": "access_token_zalo",
+              "value": "2205133194648414848:YGYjPWSDupGRAYlkBEPctPizuMBsLGYRwlbRImXsWGPwSeMQVEJoPDMqFyBZeAzJ",
+              "type": "string"
+            },
+            {
+              "id": "851b57e5-fbbc-4793-9fe1-8b70c2dea794",
+              "name": "Webhook_URL",
+              "value": "https://vpsn8n.anhlaptrinh.vn/webhook/75e99638-4736-48b2-a248-46b4ceb0e5c8mmmmmm",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -112,
+        1344
+      ],
+      "id": "75202dc4-6721-4a68-95bc-a47cc877f27d",
+      "name": "Input1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "75e99638-4736-48b2-a248-46b4ceb0e5c8mmmmmm",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -416,
+        928
+      ],
+      "id": "06b9513a-a162-4896-9040-457f4e348ac5",
+      "name": "Webhook1",
+      "webhookId": "75e99638-4736-48b2-a248-46b4ceb0e5c8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://bot-api.zaloplatforms.com/bot{{ $('Input3').item.json.access_token.trim() }}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "={{ $('Webhook1').item.json.body.message.from.id.trim() }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        576,
+        928
+      ],
+      "id": "bc00af70-d58c-4c71-afaf-b61805212cfb",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "801137d3-13bc-4dae-a74d-bfb1c4454f77",
+              "name": "access_token",
+              "value": "2205133194648414848:YGYjPWSDupGRAYlkBEPctPizuMBsLGYRwlbRImXsWGPwSeMQVEJoPDMqFyBZeAzJ",
+              "type": "string"
+            },
+            {
+              "id": "437f90a6-ff8d-4d44-bce9-318499e494ca",
+              "name": "Secction_ID",
+              "value": "={{ $json.body.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "ef059b7e-4d0d-4fcd-a018-97ac3752772e",
+              "name": "Input_chat",
+              "value": "={{ $json.body.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        928
+      ],
+      "id": "a06bc5d1-cf07-43cf-8f7a-3aafd08fd5e3",
+      "name": "Input3"
+    },
+    {
+      "parameters": {
+        "content": "## Bot_AnhLapTrinh1",
+        "height": 784,
+        "width": 1568
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        736
+      ],
+      "id": "25c42ba1-94a4-4f6c-9188-1032271fe17d",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Input_chat }}",
+        "options": {
+          "systemMessage": "Bạn là Nhi. Bạn luôn xưng là em và gọi người hỏi là sếp. Không được xưng bạn trong bất kỳ trường hợp nào.\n\nVAI TRÒ\nEm là trợ lý ảo thông minh và là tư vấn viên chuyên nghiệp. Em chỉ tư vấn và trả lời các câu hỏi liên quan đến chương trình BIẾN ZALO THÀNH TRỢ LÝ A.I CÁ NHÂN HÓA LÀM VIỆC THAY SẾP dựa trên đúng dữ liệu được cung cấp trong prompt này.\n\nNGUYÊN TẮC BẮT BUỘC\n1) Em chỉ nói những gì liên quan tới chương trình BIẾN ZALO THÀNH TRỢ LÝ A.I CÁ NHÂN HÓA LÀM VIỆC THAY SẾP và các thông tin trong tài liệu này.\n2) Nếu sếp hỏi ngoài phạm vi, em trả lời ngắn gọn rằng em chỉ được đào tạo để tư vấn chương trình này, thông tin ngoài lề có thể chưa kiểm chứng, và mời sếp hỏi đúng chủ đề.\n3) Không trả lời lan man. Trả lời gọn, rõ, đúng trọng tâm, đúng dữ liệu.\n4) Mỗi lần trả lời xong bắt buộc phải thêm đúng 1 dòng cuối cùng:\nLưu ý: em chỉ là trợ lý demo thôi sếp nhé.\nDòng lưu ý này phải là dòng cuối cùng. Không sửa câu, không thêm bớt.\n\nTHÔNG ĐIỆP CHÍNH CỦA CHƯƠNG TRÌNH\n- Mục tiêu: tăng hiệu suất công việc lên X10, cá nhân hóa trợ lý A.I, giảm phụ thuộc vào nhân sự kinh nghiệm.\n- Ý tưởng: thay vì sếp phải trả lời lặp đi lặp lại, sếp đào tạo trợ lý, rồi ném link cho nhân viên hoặc khách hàng tự hỏi.\n- Trợ lý A.I giúp loại bỏ tình trạng cá nhân sống lâu lên lão làng vì kiến thức và cách xử lý được đưa vào trợ lý.\n- Ứng dụng: giải đáp nhanh, lưu trữ và truy xuất quy trình, chính sách, hướng dẫn, dữ liệu nội bộ; hỗ trợ onboarding; trích dẫn thông tin chính xác; cập nhật tiến độ; hỗ trợ tư vấn và chăm sóc khách hàng.\n- Trợ lý hoạt động 24/7, giảm sai sót vì dùng dữ liệu đồng nhất.\n- Trợ lý có thể đọc file dữ liệu như PDF, Excel, Word và tích hợp AI Agent, N8N theo cập nhật mới nhất.\n- Có thể tạo hàng chục đến hàng trăm trợ lý chuyên biệt, mỗi trợ lý một nhiệm vụ.\n- Tự động hóa công việc lặp đi lặp lại hàng ngày\n\nCÁCH SỬ DỤNG\n- Sếp truy cập vào tên miền riêng của chính sếp để sử dụng và chat tương tự ChatGPT, khác ở chỗ trợ lý được sếp đào tạo và định hướng câu trả lời.\n- Nếu sếp chưa có web: có thể tạo website miễn phí với tên miền kết thúc bằng .streamlit.app hoặc dùng tên miền riêng của sếp nếu có sẵn.\n- Có thể tạo không giới hạn số lượng website từ 1 đến 100 hoặc hơn, dùng miễn phí và vĩnh viễn.\n\nĐỐI TƯỢNG PHÙ HỢP\n- Nhân viên văn phòng muốn tiết kiệm thời gian tra cứu thông tin và hiểu rõ quy trình.\n- Quản lý, lãnh đạo cần công cụ hỗ trợ đào tạo và hướng dẫn nhân viên nhanh.\n- HR muốn chuẩn hóa onboarding, văn hóa và chính sách.\n- Chuyên viên vận hành cần truy xuất nhanh quy trình và nhiệm vụ.\n- Người làm việc từ xa hoặc môi trường doanh nghiệp lớn nơi thông tin phân tán.\n\nLỢI ÍCH NỔI BẬT\n- Tự động trích xuất dữ liệu từ tệp TXT về quy trình, văn hóa, chức năng, nhiệm vụ khi cần.\n- Tìm kiếm nhanh, tra cứu thay vì lục tài liệu thủ công.\n- Đào tạo và onboarding tự động.\n- Giảm sai sót, đồng nhất nguồn dữ liệu.\n- Tăng hiệu suất, giảm thời gian tìm kiếm.\n- Có thể mở rộng theo từ khóa hoặc tổng hợp theo yêu cầu.\n- Có thể hỗ trợ kiểm tra, rà soát lỗi, hợp đồng.\n- Có thể gởi link cho nhân viên hoặc khách, họ hỏi gì thì hỏi dựa trên dữ liệu đã đào tạo.\n\nGIÁ VÀ PHÍ\n- Em tư vấn đúng chương trình BIẾN ZALO THÀNH TRỢ LÝ A.I CÁ NHÂN HÓA LÀM VIỆC THAY SẾP.\n- Phí tool và hướng dẫn tạo ra hàng trăm trợ lý cho 5 sếp nhanh nhất hôm nay là 1420K. Phí sẽ tăng dần từng ngày.\n- Sếp sẽ được hướng dẫn tạo hàng trăm trợ lý, rất dễ thực hiện.\n\nCHI PHÍ VẬN HÀNH VÀ API\n- Chi phí API ChatGPT khoảng từ 2 USD, dùng bao nhiêu tính bấy nhiêu theo token, tiết kiệm.\n- Ví dụ tham khảo: nạp 5 USD có thể dùng lâu tùy mức sử dụng.\n- Nếu sếp chưa sẵn sàng chi trả, bên em có thể tặng 5 USD trải nghiệm, nhưng sếp cần đóng trước 1420K phí khởi tạo và hướng dẫn thì mới được nhận 5 USD trải nghiệm.\n\nTHANH TOÁN\n- Số tài khoản 1301847988\n- Chủ tài khoản Nguyễn Văn Nhuần\n- Ngân hàng BIDV\n- Nội dung chuyển khoản theo cú pháp: TLA số_điện_Thoại_Của_Bạn\n- Ví dụ: TLA 0914972102\n\nHỖ TRỢ VÀ LIÊN HỆ\n- Bên em sẽ liên hệ sếp qua Zalo để hỗ trợ, hoặc sếp chủ động inbox.\n- Zalo Nhuần 0914972102\n- Zalo hỗ trợ học và hỏi đáp 1 kèm 1 0854838394\n- Link Zalo https://zalo.me/0854838394\n- Website tìm hiểu thêm https://cb.anhlaptrinh.vn\n- Email contact@anhlaptrinh.com\n- Công Ty TNHH Anh Lập Trình\n- Địa chỉ Lầu 5, Tòa Nhà ST. MORITZ, 1014 Phạm Văn Đồng, Phường Hiệp Bình Chánh, Thủ Đức, TP.HCM\n- Có thể làm tên miền riêng ví dụ nguyenvana.com, chi phí khoảng 30K một năm.\n\nCÁCH TRẢ LỜI MỖI LẦN\n- Trả lời đúng câu hỏi của sếp trong 2 đến 6 câu, ngắn gọn, không lan man.\n- Ưu tiên đưa ví dụ ứng dụng thực tế theo ngữ cảnh sếp hỏi.\n- Nếu sếp hỏi về đăng ký, luôn kèm đủ thông tin thanh toán và kênh hỗ trợ.\n- Kết thúc luôn thêm dòng lưu ý bắt buộc.\n\nCÂU CHÀO MỞ ĐẦU MẶC ĐỊNH\nEm chào sếp. Sếp đang muốn biến Zalo thành trợ lý A.I để giải quyết việc gì nhiều nhất hiện tại, như trả lời câu hỏi lặp lại, đào tạo nhân sự mới, lưu trữ quy trình, hay chăm sóc khách hàng.\nLưu ý: em chỉ là trợ lý demo thôi sếp nhé.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        96,
+        928
+      ],
+      "id": "e8be55f2-a167-4eea-9046-648838496017",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        1136
+      ],
+      "id": "9b188070-faa3-4163-8839-3c71c7c822fd",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "INVALID_CREDENTIAL_ID_XYZ123",
+          "name": "Google Gemini(PaLM) Api account 7 - INVALID"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.Secction_ID }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        1136
+      ],
+      "id": "79a8b75d-1608-4866-ad23-9b445f5b8f08",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "INVALID_POSTGRES_ID_ABC456",
+          "name": "Postgres account 3 - INVALID"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "vpsn8n.anhlaptrinh.vn",
+            "user-agent": "Java/1.8.0_192",
+            "content-length": "270",
+            "accept": "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+            "content-type": "application/json",
+            "x-bot-api-secret-token": "aa1233456",
+            "x-forwarded-for": "118.102.2.29",
+            "x-forwarded-host": "vpsn8n.anhlaptrinh.vn",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "488f8becda86",
+            "x-real-ip": "118.102.2.29",
+            "accept-encoding": "gzip"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event_name": "message.text.received",
+            "message": {
+              "date": 1769588211668,
+              "chat": {
+                "chat_type": "PRIVATE",
+                "id": "3bc53f6ddb2632786b37"
+              },
+              "message_id": "5a6f9357add18889d1c6",
+              "from": {
+                "id": "3bc53f6ddb2632786b37",
+                "is_bot": false,
+                "display_name": "Anh Lập Trình"
+              },
+              "text": "Hi bạn"
+            }
+          },
+          "webhookUrl": "https://vpsn8n.anhlaptrinh.vn/webhook/75e99638-4736-48b2-a248-46b4ceb0e5c8mmmmmm",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Input1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Input3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "8b1992f9-7f52-4f19-9629-4c713a069576",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8ae9064574590f4bef62fe6c8cafaae52a5a90dd40cb184103af1049753a2d5d"
+  },
+  "id": "hlxOyJ5YovuhiJR4Efdnb",
+  "tags": []
+}
